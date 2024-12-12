@@ -18,8 +18,5 @@ namespace Finale_Crud.Models
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "The passwords do not match.")]
         public string ConfirmPassword { get; set; }
-
-        public string Role { get; set; }
-
     }
 }
