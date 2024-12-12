@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Student List";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<form method="get" asp-action="Index" class="d-inline-block">
+    <div class="form-group">
+        <button type="submit" name="SortOrder" value="NameAsc" class="btn btn-primary">
+            Sort by Name
+        </button>
+    </div>
+</form>
+
+<form method="get" asp-action="Index" class="d-inline-block">
+    <div class="form-group">
+        <button type="submit" name="SortOrder" value="AgeDesc" class="btn btn-primary">
+            Sort by Age
+        </button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Birthdate</th>
+            <th>Country</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Email</td>
+                <td>@item.Age</td>
+                <td>@item.Birthdate</td>
+                <td>@item.cname</td>
+                <td>
+                    <form asp-controller="Students" asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirmDelete();">
+                        <input type="hidden" name="__RequestVerificationToken" value="@ViewData["RequestVerificationToken"]" />
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+
+                    <br />
+                    <form asp-controller="Students" asp-action="AddOrEdit" asp-route-id="@item.Id" method="get">
+                        <input type="hidden" name="__RequestVerificationToken" value="@ViewData["RequestVerificationToken"]" />
+                        <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function confirmDelete() {
+            return confirm('Are you sure you want to delete this student?');
+        }
+
+    </script>
+
+}
